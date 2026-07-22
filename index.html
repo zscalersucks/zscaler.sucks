@@ -141,9 +141,37 @@
     padding: 2rem 0 3rem; color: var(--ink-soft); font-size: 0.85rem;
   }
   footer.site p { max-width: 46rem; margin: 0 0 0.75rem; }
+
+  .odometer {
+    margin: 1.25rem 0 0; font-family: var(--mono); font-size: 0.82rem;
+    color: var(--ink-soft); font-variant-numeric: tabular-nums;
+  }
+  .odometer strong { color: var(--ink); }
+
+  #inspection {
+    display: none; position: fixed; inset: 0; z-index: 100; background: var(--bg);
+    align-items: center; justify-content: center; transition: opacity 0.4s;
+  }
+  #inspection.active { display: flex; }
+  #inspection.done { opacity: 0; pointer-events: none; }
+  #inspection .scan { font-family: var(--mono); font-size: 0.95rem; color: var(--ink-soft); }
+  #inspection .line { opacity: 0; transition: opacity 0.25s; margin: 0.4rem 0; }
+  #inspection .line.on { opacity: 1; }
+  #inspection .line strong { color: var(--ink); }
 </style>
 </head>
 <body>
+<!-- You inspect our source. We inspect your traffic. It's called a relationship. -->
+
+<div id="inspection" role="status" aria-label="Inspecting your visit">
+  <div class="scan">
+    <div class="line"><strong>Inspecting your visit…</strong></div>
+    <div class="line">✓ TLS decrypted</div>
+    <div class="line">✓ Intentions reviewed</div>
+    <div class="line">✓ Complaint pre-dismissed</div>
+    <div class="line">✓ Welcome.</div>
+  </div>
+</div>
 
 <header class="top">
   <div class="wrap topbar">
@@ -153,6 +181,7 @@
       <a href="#locator">Cert Store Locator</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#ticket">Ticket Status</a>
+      <a href="/bingo.html">Bingo</a>
     </nav>
   </div>
 </header>
@@ -172,8 +201,10 @@
       <span class="pill">✓ Zero Trust, zero judgment</span>
       <span class="pill">✓ Your visit has been logged for quality and amusement purposes</span>
     </div>
+    <p class="odometer">Packets lovingly inspected since you arrived: <strong id="pkt">0</strong></p>
   </div>
 
+  <!-- These answers were themselves detonated in a sandbox and found to be benign. -->
   <section id="faq">
     <p class="kicker">Frequently Aired Grievances</p>
     <h2>Every complaint below is real and valid. Click any of them for our complete, unconditional support.</h2>
@@ -276,6 +307,7 @@
     </details>
   </section>
 
+  <!-- There is a 28th location. We're not ready to talk about it. -->
   <section id="locator">
     <p class="kicker">Developer Tools</p>
     <h2>The Certificate Store Locator™</h2>
@@ -356,6 +388,33 @@
     <p>No cookies, no analytics, no tracking. We wouldn't know where to put the certificate anyway.</p>
   </div>
 </footer>
+<!-- This comment has been logged for quality and amusement purposes. -->
 
+<script>
+  (function () {
+    const el = document.getElementById('inspection');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (sessionStorage.getItem('inspected') || reduced) { el.remove(); return; }
+    el.classList.add('active');
+    const lines = el.querySelectorAll('.line');
+    lines.forEach((l, i) => setTimeout(() => l.classList.add('on'), 200 + i * 450));
+    const total = 200 + lines.length * 450;
+    setTimeout(() => { el.classList.add('done'); sessionStorage.setItem('inspected', '1'); }, total + 350);
+    setTimeout(() => el.remove(), total + 850);
+  })();
+
+  (function () {
+    const el = document.getElementById('pkt');
+    let n = 0;
+    setInterval(() => {
+      n += 917 + Math.floor(Math.random() * 4283);
+      el.textContent = n.toLocaleString();
+    }, 150);
+  })();
+
+  console.log('%cWe see you opened DevTools.', 'font-weight:700;font-size:14px;');
+  console.log('We always see. You inspect us, we inspect you — it\'s called a relationship.');
+  console.log('The certificate for this console lives in yet another trust store. Keep looking.');
+</script>
 </body>
 </html>

@@ -1,0 +1,20 @@
+# security.txt for zscaler.sucks (RFC 9116, emotionally)
+#
+# We have nothing to hide. Literally. It's all being inspected anyway.
+
+Contact: https://zscaler.sucks/#ticket
+Expires: 2030-01-01T00:00:00.000Z
+Preferred-Languages: en, TLS
+Policy: https://zscaler.sucks/#faq
+Canonical: https://zscaler.sucks/.well-known/security.txt
+
+# If you found a vulnerability on this site, please know that it was
+# already detonated in a sandbox and determined to be your build artifact.
+#
+# Responsible disclosure process:
+#   1. Open a ticket.
+#   2. The ticket is auto-resolved. (Root cause: working as intended.)
+#   3. Thank you for self-identifying.
+#
+# This is a static parody site with no backend, no cookies, and no data.
+# The only thing you can exfiltrate from here is a bingo card.
