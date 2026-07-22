@@ -600,12 +600,16 @@
       "Escalation received. It has been de-escalated on your behalf. Breathe with us."
     ];
     const pick = arr => arr[(Math.random() * arr.length) | 0];
+    const secondPerson = s => s
+      .replace(/^my\b/, 'your')
+      .replace(/\bI own\b/, 'you own')
+      .replace(/\bI needed\b/, 'you needed');
     const btn = document.getElementById('gen-btn');
     btn.addEventListener('click', () => {
       const s = pick(SUBJECTS);
       document.getElementById('gen-out').hidden = false;
       document.getElementById('gen-q').textContent = 'Zscaler blocked ' + s + ' ' + pick(TIMINGS) + '.';
-      document.getElementById('gen-a').textContent = pick(REBUTTALS).replaceAll('{s}', s);
+      document.getElementById('gen-a').textContent = pick(REBUTTALS).replaceAll('{s}', secondPerson(s));
       document.getElementById('gen-ticket').textContent =
         'Ticket #' + (100000 + ((Math.random() * 900000) | 0)) +
         ' opened · auto-resolved in ' + (3 + ((Math.random() * 11) | 0)) +
