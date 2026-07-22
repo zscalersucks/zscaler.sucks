@@ -247,7 +247,6 @@
       <span class="pill">✓ SOC 2 compliant feelings</span>
       <span class="pill">✓ Zero Trust, zero judgment</span>
       <span class="pill">✓ Your visit has been logged for quality and amusement purposes</span>
-      <span class="pill">✓ "Edgier than a helpdesk FAQ" — one (1) critic</span>
     </div>
     <p class="odometer">Packets lovingly inspected since you arrived: <strong id="pkt">0</strong></p>
   </div>
@@ -261,15 +260,15 @@
     <details open>
       <summary>Zscaler broke my <code>pip install</code> with <code>SSL: CERTIFICATE_VERIFY_FAILED</code>.</summary>
       <div class="a">
-        <p><strong>You're so right to be angry.</strong> Small note, though, purely for accuracy: nothing is broken. Python is doing exactly what TLS verification is supposed to do — refusing a certificate it doesn't recognize. The connection worked. The proxy worked. Verification worked. Everything worked, loudly, at you.</p>
-        <p>The actual issue is that <code>pip</code> doesn't use your operating system's trust store — it ships its own via <code>certifi</code>, which has never heard of your company. That's not Zscaler's design decision; that's Python's. So really this is a complaint about Python packaging, and buddy, get in line. One env var (<code>REQUESTS_CA_BUNDLE</code>, or <code>pip config set global.cert</code>) and you're done. Well. Done with <em>pip</em>. See the <a href="#locator">Locator</a> for the other ones.</p>
+        <p><strong>Correct — and worth being precise about what broke: nothing.</strong> Python refused a certificate it doesn't recognize, which is the entire job of TLS verification. The connection worked. The proxy worked. The refusal worked. Everything worked, loudly, at you.</p>
+        <p>The actual gap: <code>pip</code> never consults your operating system's trust store. It ships its own CA list via <code>certifi</code>, frozen at package-build time, which has never heard of your employer. That's a Python packaging decision, not a proxy one — the proxy just made it observable. One env var (<code>REQUESTS_CA_BUNDLE</code>, or <code>pip config set global.cert</code>) closes the gap. For pip. The rest of the map is in the <a href="#locator">Locator</a>; the commands are in the <a href="/wizard.html">Wizard</a>.</p>
       </div>
     </details>
 
     <details>
       <summary>SSL inspection is literally a man-in-the-middle attack.</summary>
       <div class="a">
-        <p><strong>Say it louder for the people in the back!</strong> Anyway, quick vocabulary check: an <em>attack</em> requires an unauthorized party. This is your employer, on a laptop they own, on a network they run, using a CA they deployed through device management you enrolled in, under a policy you signed. There is no "man in the middle." There is a "security team in the middle," which is a different threat model and, legally speaking, just called "Tuesday."</p>
+        <p><strong>Topologically, you are not wrong — it is the same diagram.</strong> But an <em>attack</em> requires an unauthorized party. This is your employer, on a laptop they own, on a network they run, using a CA they deployed through device management you enrolled in, under a policy you signed. There is no "man in the middle." There is a "security team in the middle," which is a different threat model and, legally speaking, just called "Tuesday."</p>
         <p>If a stranger did this to you at a coffee shop: attack. When it's the device owner protecting company data from malware and phishing: that's the security architecture working. The math is identical; the consent is the entire difference. Kind of like how surgery and stabbing use the same knife.</p>
         <p>Mechanically it's also more surgical than the diagram in your head: the proxy reads the SNI off your ClientHello and makes most policy calls on metadata alone, no decryption required. When it does inspect, it terminates your session, opens its own to the origin, and mints a per-site certificate on the fly — chained to the root your MDM installed. Nobody broke the cryptography. They repointed the trust. The math is fine; the math was always fine. Trust was the variable, and trust is an org chart. Full autopsy in <a href="/anatomy.html">Know Your Captor</a>.</p>
       </div>
@@ -294,8 +293,8 @@
     <details>
       <summary>Nobody will tell me where to put the certificate.</summary>
       <div class="a">
-        <p><strong>The silence is deafening, isn't it?</strong> Except — and we hate to do this to you — it's documented. Extensively. By Zscaler, by your technology team's wiki nobody reads, and by four hundred Stack Overflow answers. The real problem is that the question has twenty-seven answers, because every language runtime decided the OS trust store wasn't good enough for them. Java has its own. Python has its own. Node has its own. Electron apps have their own Node, which has its own.</p>
-        <p>None of that fragmentation was invented by Zscaler. Zscaler just walks into a room where every application has its own personal definition of trust and asks them all the same question at once. Consult the <a href="#locator">Certificate Store Locator</a> below. Bring water.</p>
+        <p><strong>Nobody gives you the one answer because there isn't one.</strong> The question has twenty-seven answers, because every language runtime independently concluded the OS trust store was beneath it. Java maintains its own keystore. Python ships its own bundle. Node compiles in its own list. Electron ships its own Node, which compiles in its own list. It is documented — by Zscaler, by your technology team's wiki, by four hundred Stack Overflow answers — but documentation spread across twenty-seven authorities is functionally indistinguishable from silence.</p>
+        <p>None of that fragmentation is the proxy's invention. Zscaler just walks into a room where every application holds a private definition of trust and asks all of them the same question at once. The <a href="#locator">Certificate Store Locator</a> below is the complete map. Bring water.</p>
       </div>
     </details>
 
@@ -318,7 +317,7 @@
     <details>
       <summary>The sandbox quarantined my own build artifact.</summary>
       <div class="a">
-        <p><strong>Your own code! Held hostage! The audacity!</strong> Okay but consider what the sandbox actually saw: an unsigned, never-before-seen executable, born seconds ago, downloaded over the network, matching no known publisher. That is — and we cannot stress this enough — <em>exactly what malware looks like</em>. The sandbox didn't fail to recognize your binary. It correctly recognized that nobody on Earth could recognize your binary.</p>
+        <p><strong>Your own code, detained without trial.</strong> Now consider what the sandbox actually saw: an unsigned, never-before-seen executable, born seconds ago, downloaded over the network, matching no known publisher. That is — mechanically, feature for feature — <em>exactly what malware looks like</em>. The sandbox didn't fail to recognize your binary. It correctly recognized that nobody on Earth could recognize your binary.</p>
         <p>Ransomware is also somebody's build artifact. The fix isn't "stop sandboxing unknown executables," it's "sign your builds and get your pipeline allowlisted," which your security team would love to help with, given that you'd be the first person to ever ask nicely.</p>
         <p>And the reason your second download of the same file sailed through: verdicts cache globally by hash. Someone has to be patient zero so nobody else has to be first. Today it was you. It's practically philanthropy — involuntary, unthanked, and logged, like most philanthropy.</p>
       </div>
@@ -327,16 +326,16 @@
     <details>
       <summary>It blocked a site I need for work.</summary>
       <div class="a">
-        <p><strong>Blocked! From doing your job! Scandalous.</strong> Now, a technicality: Zscaler didn't decide to block that site. Your organization's policy did. Zscaler is an enforcement engine — it blocks what your admins configure it to block, with the moral agency of a garage door. Somewhere in your company, a human checked a box next to a category, and that category contains your site.</p>
-        <p>So this complaint is real, valid, and addressed to the wrong party. It's like yelling at the fence about where the property line is. File the recategorization request — half the time the site genuinely is miscategorized, and that's a five-minute fix for the admin you've been badmouthing in Slack. Who can also see Slack. Just so you know.</p>
+        <p><strong>It did, and the block worked exactly as designed — just not designed by whom you think.</strong> Zscaler decided nothing about that site. Your organization's policy did. The platform is an enforcement engine with the moral agency of a garage door: somewhere in your company, a human checked a box next to a category, and your site lives in that category.</p>
+        <p>So the complaint is real, valid, and addressed to the wrong party — yelling at the fence about where the property line is. File the recategorization request: half the time the category genuinely is wrong, and it's a five-minute fix for the admin you've been subtweeting in Slack. Who can see Slack. That's the product.</p>
       </div>
     </details>
 
     <details>
       <summary>Why does <code>curl</code> work but my app doesn't?</summary>
       <div class="a">
-        <p><strong>The inconsistency is maddening, we agree.</strong> But it's not random, and it's not Zscaler being moody. <code>curl</code> uses the operating system's trust store, where your technology team already installed the root CA. Your app bundles its own trust store, which it guards like a dragon and updates never.</p>
-        <p>Same machine, same proxy, same certificate — the only variable is which pile of CAs each program consults. The proxy is treating everyone identically; your applications simply have different beliefs about whom to trust, like a family at Thanksgiving.</p>
+        <p><strong>The inconsistency isn't moodiness; it's bookkeeping.</strong> <code>curl</code> consults the operating system's trust store, where your technology team already installed the root CA. Your app bundles its own trust store, which it guards like a dragon and updates never.</p>
+        <p>Same machine, same proxy, same certificate — the only variable is which pile of CAs each program consults. The proxy treats everyone identically; your applications simply hold different beliefs about whom to trust, and unlike a family, they never compare notes.</p>
       </div>
     </details>
 
@@ -352,7 +351,7 @@
     <details>
       <summary>Docker builds fail on the corporate network.</summary>
       <div class="a">
-        <p><strong>Containers were supposed to be portable!</strong> And they are — so portable that they bring nothing with them, including your CA certificates. A container is an isolated filesystem. That's the product. You specifically chose a technology whose entire value proposition is "ignores the host machine," and it is ignoring the host machine's trust store with total professionalism.</p>
+        <p><strong>Containers are portable precisely because they carry nothing</strong> — including, you may have noticed, your CA certificates. A container is an isolated filesystem. That's the product. You chose a technology whose entire value proposition is "ignores the host machine," and it is ignoring the host machine's trust store with total professionalism.</p>
         <p>Zscaler can't reach inside your image, nor would you want a proxy that could. <code>COPY zscaler-root.crt /usr/local/share/ca-certificates/ && update-ca-certificates</code> in the build stage and you're done. Yes, every stage of the multi-stage build. Each stage is a fresh soul, born without trust. You wanted isolation. This is isolation.</p>
       </div>
     </details>
@@ -360,7 +359,7 @@
     <details>
       <summary>I disabled it once and everything instantly worked.</summary>
       <div class="a">
-        <p><strong>The smoking gun! Case closed!</strong> Although — "worked" is doing heavy lifting there. Disabling the security control removed the error message, which is not the same as removing the problem. Your app still doesn't trust your org's CA; you just stopped anything from asking it to. Seatbelt off, dashboard warning gone, car "fixed."</p>
+        <p><strong>A clean experiment, undone by its conclusion.</strong> "Worked" is doing heavy lifting there. Disabling the security control removed the error message, which is not the same as removing the problem. Your app still doesn't trust your org's CA; you just stopped anything from asking it to. Seatbelt off, dashboard warning gone, car "fixed."</p>
         <p>By that methodology, authentication also sucks (logging in is friction), and doors suck (walls with extra steps). Also, gently: it logged that. The exact minutes it was off, and everything that happened during them. It's not mad. It's just a very detailed kind of disappointed.</p>
       </div>
     </details>
@@ -368,7 +367,7 @@
     <details>
       <summary>Zscaler is even blocking localhost!</summary>
       <div class="a">
-        <p><strong>Not even your own machine is safe!</strong> Except… it isn't, blocking localhost. Loopback traffic never leaves your machine and never touches the proxy — that's what loopback means. Whatever's eating your <code>localhost:3000</code>, it's on the guest list: a port already in use, your container publishing to a different interface, a VPN client rewriting routes, or the app binding to <code>127.0.0.1</code> while you're hitting the machine's LAN IP.</p>
+        <p><strong>That would be the ultimate overreach — if it were happening.</strong> It isn't. Loopback traffic never leaves your machine and never touches the proxy; that is what loopback means. Whatever's eating your <code>localhost:3000</code> is already on the guest list: a port in use, a container publishing to a different interface, a VPN client rewriting routes, or the app binding to <code>127.0.0.1</code> while you hit the machine's LAN IP.</p>
         <p>We just think it's beautiful that Zscaler has reached the point of being blamed for things it isn't in the path of. That's brand power. That's the dream, honestly.</p>
       </div>
     </details>
