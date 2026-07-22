@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>zscaler.sucks — Finally, someone said it.</title>
+<meta name="description" content="The internet's #1 safe space for people whose packets have been inspected. We hear you. We validate you. We validate your certificates too.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f6fa;
+    --ink: #16202c;
+    --ink-soft: #4b5a6b;
+    --accent: #0b57d0;
+    --accent-ink: #ffffff;
+    --border: #dde4ee;
+    --card: #ffffff;
+    --good: #0a7d33;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1420;
+      --bg-soft: #131b2a;
+      --ink: #e8edf5;
+      --ink-soft: #9fadc0;
+      --accent: #5b9bff;
+      --accent-ink: #0a1220;
+      --border: #243044;
+      --card: #151f30;
+      --good: #4fca7d;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+
+  header.top {
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(8px);
+  }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.8rem 0; gap: 1rem; flex-wrap: wrap;
+  }
+  .brand { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .brand .tld { color: var(--accent); }
+  nav a {
+    color: var(--ink-soft); text-decoration: none; font-size: 0.9rem;
+    margin-left: 1.1rem;
+  }
+  nav a:hover { color: var(--accent); }
+
+  .hero { padding: 4.5rem 0 3rem; }
+  .hero h1 {
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
+    line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 1rem;
+  }
+  .hero .sub {
+    font-size: 1.15rem; color: var(--ink-soft); max-width: 42rem; margin: 0 0 1.75rem;
+  }
+  .pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .pill {
+    font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--ink-soft); background: var(--bg-soft);
+  }
+
+  section { padding: 2.5rem 0; }
+  h2 { font-size: 1.6rem; letter-spacing: -0.01em; margin: 0 0 0.4rem; }
+  .kicker {
+    text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.12em;
+    color: var(--accent); font-weight: 700; margin: 0 0 0.5rem;
+  }
+  .lede { color: var(--ink-soft); margin: 0 0 1.5rem; max-width: 44rem; }
+
+  details {
+    border: 1px solid var(--border); border-radius: 12px;
+    background: var(--card); margin-bottom: 0.75rem; overflow: hidden;
+  }
+  summary {
+    cursor: pointer; padding: 1rem 1.15rem; font-weight: 650; font-size: 1.02rem;
+    list-style: none; display: flex; gap: 0.75rem; align-items: baseline;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "▸"; color: var(--accent); flex: none; transition: transform 0.15s; }
+  details[open] summary::before { transform: rotate(90deg); }
+  details .a { padding: 0 1.15rem 1.15rem 2.4rem; color: var(--ink-soft); }
+  details .a p { margin: 0 0 0.75rem; }
+  details .a p:last-child { margin-bottom: 0; }
+  details .a strong { color: var(--ink); }
+  code {
+    font-family: var(--mono); font-size: 0.85em;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    padding: 0.1em 0.35em; border-radius: 5px;
+  }
+
+  .locator {
+    border: 1px solid var(--border); border-radius: 14px; background: var(--card);
+    padding: 1.5rem;
+  }
+  .locator ol {
+    margin: 1rem 0 0; padding-left: 1.4rem;
+    columns: 2; column-gap: 2.5rem;
+    font-family: var(--mono); font-size: 0.82rem; line-height: 1.9;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 640px) { .locator ol { columns: 1; } }
+  .locator li::marker { color: var(--accent); }
+  .locator .final {
+    margin-top: 1.25rem; padding-top: 1.1rem; border-top: 1px dashed var(--border);
+    font-style: italic; color: var(--ink-soft);
+  }
+
+  .quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  blockquote {
+    margin: 0; border: 1px solid var(--border); border-radius: 12px;
+    background: var(--card); padding: 1.15rem; font-size: 0.95rem;
+  }
+  blockquote footer { margin-top: 0.75rem; color: var(--ink-soft); font-size: 0.82rem; }
+
+  .ticket {
+    border: 1px solid var(--border); border-radius: 14px; background: var(--card);
+    padding: 1.5rem; font-family: var(--mono); font-size: 0.9rem;
+  }
+  .ticket .row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.35rem 0; border-bottom: 1px dashed var(--border); flex-wrap: wrap; }
+  .ticket .row:last-child { border-bottom: none; }
+  .ticket .label { color: var(--ink-soft); }
+  .ticket .status { color: var(--good); font-weight: 700; }
+
+  footer.site {
+    border-top: 1px solid var(--border); margin-top: 3rem;
+    padding: 2rem 0 3rem; color: var(--ink-soft); font-size: 0.85rem;
+  }
+  footer.site p { max-width: 46rem; margin: 0 0 0.75rem; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap topbar">
+    <div class="brand">zscaler<span class="tld">.sucks</span></div>
+    <nav>
+      <a href="#faq">Complaints</a>
+      <a href="#locator">Cert Store Locator</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#ticket">Ticket Status</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <h1>Finally, someone said it.<br>Zscaler sucks.</h1>
+    <p class="sub">
+      Welcome to the internet's #1 safe space for people whose packets have been inspected.
+      We hear you. We validate you. We validate your certificates, too — that's kind of the whole problem, isn't it?
+      Come in. Vent. You're among friends<span title="friend-in-the-middle">*</span>.
+    </p>
+    <div class="pills">
+      <span class="pill">✓ 100% on your side</span>
+      <span class="pill">✓ SOC 2 compliant feelings</span>
+      <span class="pill">✓ Zero Trust, zero judgment</span>
+      <span class="pill">✓ Your visit has been logged for quality and amusement purposes</span>
+    </div>
+  </div>
+
+  <section id="faq">
+    <p class="kicker">Frequently Aired Grievances</p>
+    <h2>Every complaint below is real and valid. Click any of them for our complete, unconditional support.</h2>
+    <p class="lede">We collected the internet's most common Zscaler complaints so you can finally feel heard. Expand one. Feel heard.</p>
+
+    <details open>
+      <summary>Zscaler broke my <code>pip install</code> with <code>SSL: CERTIFICATE_VERIFY_FAILED</code>.</summary>
+      <div class="a">
+        <p><strong>You're so right to be angry.</strong> Small note, though, purely for accuracy: nothing is broken. Python is doing exactly what TLS verification is supposed to do — refusing a certificate it doesn't recognize. The connection worked. The proxy worked. Verification worked. Everything worked, loudly, at you.</p>
+        <p>The actual issue is that <code>pip</code> doesn't use your operating system's trust store — it ships its own via <code>certifi</code>, which has never heard of your company. That's not Zscaler's design decision; that's Python's. So really this is a complaint about Python packaging, and buddy, get in line. One env var (<code>REQUESTS_CA_BUNDLE</code>, or <code>pip config set global.cert</code>) and you're done. Well. Done with <em>pip</em>. See the <a href="#locator">Locator</a> for the other ones.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>SSL inspection is literally a man-in-the-middle attack.</summary>
+      <div class="a">
+        <p><strong>Say it louder for the people in the back!</strong> Anyway, quick vocabulary check: an <em>attack</em> requires an unauthorized party. This is your employer, on a laptop they own, on a network they run, using a CA they deployed through device management you enrolled in, under a policy you signed. There is no "man in the middle." There is an "IT department in the middle," which is a different threat model and, legally speaking, just called "Tuesday."</p>
+        <p>If a stranger did this to you at a coffee shop: attack. When it's the device owner protecting company data from malware and phishing: that's the security architecture working. The math is identical; the consent is the entire difference. Kind of like how surgery and stabbing use the same knife.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Nobody will tell me where to put the certificate.</summary>
+      <div class="a">
+        <p><strong>The silence is deafening, isn't it?</strong> Except — and we hate to do this to you — it's documented. Extensively. By Zscaler, by your IT team's wiki nobody reads, and by four hundred Stack Overflow answers. The real problem is that the question has twenty-seven answers, because every language runtime decided the OS trust store wasn't good enough for them. Java has its own. Python has its own. Node has its own. Electron apps have their own Node, which has its own.</p>
+        <p>None of that fragmentation was invented by Zscaler. Zscaler just walks into a room where every application has its own personal definition of trust and asks them all the same question at once. Consult the <a href="#locator">Certificate Store Locator</a> below. Bring water.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Everything is slower now.</summary>
+      <div class="a">
+        <p><strong>We too remember when the internet was fast.</strong> Before you file this one, though, run an actual measurement, because "it feels slow" has a spectacular miss rate. Half the time the traffic isn't even going through Zscaler — it's your VPN split-tunnel config, your DNS, your hotel Wi-Fi, or the fourteen Electron apps you're running. The other half, TLS inspection is adding single-digit milliseconds and the app you're waiting on is spending 900ms on its own ad auctions.</p>
+        <p>Was it slower than doing nothing? Sure, physics exists. Is it why your standup video froze? Pull up the digital experience dashboard and find out — there's a decent chance the verdict is "your laptop has 63 Chrome tabs," and we'll all pretend we didn't see that.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>The sandbox quarantined my own build artifact.</summary>
+      <div class="a">
+        <p><strong>Your own code! Held hostage! The audacity!</strong> Okay but consider what the sandbox actually saw: an unsigned, never-before-seen executable, born seconds ago, downloaded over the network, matching no known publisher. That is — and we cannot stress this enough — <em>exactly what malware looks like</em>. The sandbox didn't fail to recognize your binary. It correctly recognized that nobody on Earth could recognize your binary.</p>
+        <p>Ransomware is also somebody's build artifact. The fix isn't "stop sandboxing unknown executables," it's "sign your builds and get your pipeline allowlisted," which your IT team would love to help with, given that you'd be the first person to ever ask nicely.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>It blocked a site I need for work.</summary>
+      <div class="a">
+        <p><strong>Blocked! From doing your job! Scandalous.</strong> Now, a technicality: Zscaler didn't decide to block that site. Your organization's policy did. Zscaler is an enforcement engine — it blocks what your admins configure it to block, with the moral agency of a garage door. Somewhere in your company, a human checked a box next to a category, and that category contains your site.</p>
+        <p>So this complaint is real, valid, and addressed to the wrong party. It's like yelling at the fence about where the property line is. File the recategorization request — half the time the site genuinely is miscategorized, and that's a five-minute fix for the admin you've been badmouthing in Slack. Who can also see Slack. Just so you know.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Why does <code>curl</code> work but my app doesn't?</summary>
+      <div class="a">
+        <p><strong>The inconsistency is maddening, we agree.</strong> But it's not random, and it's not Zscaler being moody. <code>curl</code> uses the operating system's trust store, where your IT department already installed the root CA. Your app bundles its own trust store, which it guards like a dragon and updates never.</p>
+        <p>Same machine, same proxy, same certificate — the only variable is which pile of CAs each program consults. The proxy is treating everyone identically; your applications simply have different beliefs about whom to trust, like a family at Thanksgiving.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>My WebSocket connections keep dropping.</summary>
+      <div class="a">
+        <p><strong>Nothing should ever end, least of all a socket.</strong> Here's the thing though: idle connection timeouts exist on every proxy, load balancer, and firewall ever built — nginx does it, AWS does it, your home router does it. A connection that sits silent for an hour is indistinguishable from a dead one, so infrastructure reaps it. This predates Zscaler by decades.</p>
+        <p>If your app dies when a long-lived connection drops, it was always going to die — Zscaler just delivered the news first. Heartbeats and reconnect logic aren't a workaround, they're the baseline every distributed-systems textbook has demanded since before you had this job. Your future incident retro thanks you.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Docker builds fail on the corporate network.</summary>
+      <div class="a">
+        <p><strong>Containers were supposed to be portable!</strong> And they are — so portable that they bring nothing with them, including your CA certificates. A container is an isolated filesystem. That's the product. You specifically chose a technology whose entire value proposition is "ignores the host machine," and it is ignoring the host machine's trust store with total professionalism.</p>
+        <p>Zscaler can't reach inside your image, nor would you want a proxy that could. <code>COPY zscaler-root.crt /usr/local/share/ca-certificates/ && update-ca-certificates</code> in the build stage and you're done. Yes, every stage of the multi-stage build. Each stage is a fresh soul, born without trust. You wanted isolation. This is isolation.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>I disabled it once and everything instantly worked.</summary>
+      <div class="a">
+        <p><strong>The smoking gun! Case closed!</strong> Although — "worked" is doing heavy lifting there. Disabling the security control removed the error message, which is not the same as removing the problem. Your app still doesn't trust your org's CA; you just stopped anything from asking it to. Seatbelt off, dashboard warning gone, car "fixed."</p>
+        <p>By that methodology, authentication also sucks (logging in is friction), and doors suck (walls with extra steps). Also, gently: it logged that. The exact minutes it was off, and everything that happened during them. It's not mad. It's just a very detailed kind of disappointed.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Zscaler is even blocking localhost!</summary>
+      <div class="a">
+        <p><strong>Not even your own machine is safe!</strong> Except… it isn't, blocking localhost. Loopback traffic never leaves your machine and never touches the proxy — that's what loopback means. Whatever's eating your <code>localhost:3000</code>, it's on the guest list: a port already in use, your container publishing to a different interface, a VPN client rewriting routes, or the app binding to <code>127.0.0.1</code> while you're hitting the machine's LAN IP.</p>
+        <p>We just think it's beautiful that Zscaler has reached the point of being blamed for things it isn't in the path of. That's brand power. That's the dream, honestly.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Okay, fine — how do I bypass Zscaler?</summary>
+      <div class="a">
+        <p><strong>Great question.</strong> It has been forwarded, verbatim, with your source IP, to your security team.</p>
+        <p>Thank you for self-identifying. It saves everyone so much time.</p>
+      </div>
+    </details>
+  </section>
+
+  <section id="locator">
+    <p class="kicker">Developer Tools</p>
+    <h2>The Certificate Store Locator™</h2>
+    <p class="lede">You asked "where do I put the cert?" and people laughed. Not us. Here is the actual, complete list of everywhere the root CA needs to live — none of which, we remind you, Zscaler invented. Check them off as you go. You will not finish.</p>
+    <div class="locator">
+      <ol>
+        <li>The OS trust store (you did this already; it wasn't enough)</li>
+        <li><code>REQUESTS_CA_BUNDLE</code></li>
+        <li><code>CURL_CA_BUNDLE</code></li>
+        <li><code>SSL_CERT_FILE</code></li>
+        <li><code>NODE_EXTRA_CA_CERTS</code></li>
+        <li><code>AWS_CA_BUNDLE</code></li>
+        <li><code>pip config set global.cert</code></li>
+        <li><code>certifi</code>'s bundle — in <em>each</em> virtualenv, forever</li>
+        <li><code>.npmrc</code> → <code>cafile=</code></li>
+        <li>Yarn, separately, out of spite</li>
+        <li>JVM <code>cacerts</code> via <code>keytool</code> (password: <code>changeit</code>, which no one ever has)</li>
+        <li>A second JVM you forgot was installed</li>
+        <li><code>git config http.sslCAInfo</code></li>
+        <li>Docker daemon: <code>/etc/docker/certs.d/</code></li>
+        <li>Inside every Docker image, at build time</li>
+        <li>Every stage of every multi-stage build</li>
+        <li>WSL, which is legally a different computer</li>
+        <li><code>gcloud config set core/custom_ca_certs_file</code></li>
+        <li>kubectl / your kubeconfig, somehow</li>
+        <li>JetBrains IDEs → Settings → Tools → Server Certificates</li>
+        <li>VS Code extensions that bundle their own Node</li>
+        <li>Electron apps, which bundle their own everything</li>
+        <li>Maven <code>truststore</code>, Gradle <code>javax.net.ssl.trustStore</code>, or both, incorrectly</li>
+        <li>Ruby: <code>SSL_CERT_FILE</code> again, but it hits different</li>
+        <li>conda: <code>ssl_verify</code>, which you will briefly set to <code>false</code> and feel bad about</li>
+        <li>Go: it respects the system store, and everyone is suspicious of it for that</li>
+        <li>That one CI runner under someone's desk</li>
+      </ol>
+      <p class="final">…and one more place. There is always one more place. You'll know you've found it when the handshake fails.</p>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <p class="kicker">Community</p>
+    <h2>Voices of the inspected</h2>
+    <div class="quotes">
+      <blockquote>
+        <p>"I came here to vent and left feeling… wrong? About everything? I don't know what happened. Anyway, this morning I added the root CA to my ninth trust store and honestly it felt like growth."</p>
+        <footer>— Senior DevOps Engineer, 14 open browser tabs about keytool</footer>
+      </blockquote>
+      <blockquote>
+        <p>"Zscaler blocked my exfil— my <em>file transfer</em>. My completely normal file transfer. So yes, this site is right. It sucks.* <br><small>*at letting me hurt myself</small>"</p>
+        <footer>— Anonymous, escorted from the building</footer>
+      </blockquote>
+      <blockquote>
+        <p>"10/10. Would be inspected again. Am, in fact, being inspected right now. We both are. Wave!"</p>
+        <footer>— Staff Engineer, at peace</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section id="ticket">
+    <p class="kicker">Support</p>
+    <h2>Check your complaint status</h2>
+    <p class="lede">Every complaint submitted to this site is processed with the same care and urgency you've come to expect.</p>
+    <div class="ticket">
+      <div class="row"><span class="label">Ticket</span><span>#00000001 — "everything is broken"</span></div>
+      <div class="row"><span class="label">Opened</span><span>The moment you joined the company</span></div>
+      <div class="row"><span class="label">Assigned to</span><span>The queue</span></div>
+      <div class="row"><span class="label">Root cause</span><span>Working as intended</span></div>
+      <div class="row"><span class="label">Resolution</span><span>Nothing was changed</span></div>
+      <div class="row"><span class="label">Status</span><span class="status">✓ RESOLVED</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><strong>The fine print, sincerely:</strong> zscaler.sucks is a parody site. It is not affiliated with, endorsed by, or (presumably) enjoyed by Zscaler, Inc. All trademarks belong to their respective owners, whose traffic is also inspected.</p>
+    <p>Plot twist: the person who runs this site actually likes the product. This entire domain is a love language. Please do not sue us — our traffic is inspected and we have nothing to hide. Literally. That's the product.</p>
+    <p>No cookies, no analytics, no tracking. We wouldn't know where to put the certificate anyway.</p>
+  </div>
+</footer>
+
+</body>
+</html>
