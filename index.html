@@ -202,19 +202,6 @@
   #ssl-toggle.off strong { color: #b3261e; }
   #ssl-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-  .genbox {
-    border: 1px solid var(--border); border-radius: 14px; background: var(--card);
-    padding: 1.5rem;
-  }
-  .genbox > button {
-    font: inherit; font-weight: 650; font-size: 0.95rem; cursor: pointer;
-    padding: 0.65rem 1.2rem; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--accent); color: #fff;
-  }
-  .genbox > button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-  .gen-q { font-weight: 650; font-size: 1.05rem; margin: 1.25rem 0 0.5rem; }
-  .gen-a { color: var(--ink-soft); margin: 0 0 0.85rem; }
-  .gen-ticket { font-family: var(--mono); font-size: 0.78rem; color: var(--good); margin: 0; }
 </style>
 </head>
 <body>
@@ -364,20 +351,6 @@
         <p>Thank you for self-identifying. It saves everyone so much time.</p>
       </div>
     </details>
-  </section>
-
-  <section id="generator">
-    <p class="kicker">Interactive</p>
-    <h2>Don't see your complaint? File a new one.</h2>
-    <p class="lede">Our intake system is fully automated, deeply empathetic, and resolves every ticket at the speed of dismissal.</p>
-    <div class="genbox">
-      <button id="gen-btn">Generate my complaint</button>
-      <div id="gen-out" hidden>
-        <p class="gen-q" id="gen-q"></p>
-        <p class="gen-a" id="gen-a"></p>
-        <p class="gen-ticket" id="gen-ticket"></p>
-      </div>
-    </div>
   </section>
 
   <!-- There is a 28th location. We're not ready to talk about it. -->
@@ -571,50 +544,6 @@
         ctx.putImageData(img, 0, 0);
       }, 50);
       setTimeout(() => { clearInterval(noise); cv.remove(); done(); }, 1500);
-    });
-  })();
-
-  (function () {
-    const SUBJECTS = [
-      "my Kubernetes dashboard", "npm install", "a WebSocket to prod", "the staging API",
-      "my Docker build", "a 4 GB model download", "the payments sandbox", "an internal wiki page",
-      "localhost, somehow", "a git clone of a repo I own", "the monitoring dashboard I needed during the outage",
-      "pip, again"
-    ];
-    const TIMINGS = [
-      "during a production incident", "five minutes before my demo", "on day one of my onboarding",
-      "on my first day back from PTO", "mid-deploy on a Friday afternoon", "during the all-hands",
-      "while the CTO was watching over my shoulder", "at 2 a.m. on call",
-      "in the middle of a live coding interview", "right after I said “this will only take a second”"
-    ];
-    const REBUTTALS = [
-      "Interesting. And what exactly was {s} doing that it couldn't survive a little inspection?",
-      "The timing wasn't bad. The timing was perfect. Imagine if that had gone through unexamined.",
-      "We hear you. The proxy heard you too. Everything heard you. That's the feature.",
-      "Have you considered that {s} may simply not be categorized yet? Neither were you, once, and look how that turned out.",
-      "A blocked request is just a request that finally got to rest. Let it.",
-      "This complaint has been cross-referenced with your previous complaints. A pattern is emerging, and the pattern is not the proxy.",
-      "Your frustration is valid, unlike the certificate that {s} presented.",
-      "Nothing was blocked. A boundary was set. Healthy relationships have those.",
-      "The proxy did the math: thirty seconds of your time against the entire company's data. It would do it again. It will, actually.",
-      "Escalation received. It has been de-escalated on your behalf. Breathe with us."
-    ];
-    const pick = arr => arr[(Math.random() * arr.length) | 0];
-    const secondPerson = s => s
-      .replace(/^my\b/, 'your')
-      .replace(/\bI own\b/, 'you own')
-      .replace(/\bI needed\b/, 'you needed');
-    const btn = document.getElementById('gen-btn');
-    btn.addEventListener('click', () => {
-      const s = pick(SUBJECTS);
-      document.getElementById('gen-out').hidden = false;
-      document.getElementById('gen-q').textContent = 'Zscaler blocked ' + s + ' ' + pick(TIMINGS) + '.';
-      document.getElementById('gen-a').textContent = pick(REBUTTALS).replaceAll('{s}', secondPerson(s));
-      document.getElementById('gen-ticket').textContent =
-        'Ticket #' + (100000 + ((Math.random() * 900000) | 0)) +
-        ' opened · auto-resolved in ' + (3 + ((Math.random() * 11) | 0)) +
-        ' ms · Root cause: working as intended';
-      btn.textContent = 'File another complaint';
     });
   })();
 
