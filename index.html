@@ -190,7 +190,7 @@
     <details>
       <summary>SSL inspection is literally a man-in-the-middle attack.</summary>
       <div class="a">
-        <p><strong>Say it louder for the people in the back!</strong> Anyway, quick vocabulary check: an <em>attack</em> requires an unauthorized party. This is your employer, on a laptop they own, on a network they run, using a CA they deployed through device management you enrolled in, under a policy you signed. There is no "man in the middle." There is an "IT department in the middle," which is a different threat model and, legally speaking, just called "Tuesday."</p>
+        <p><strong>Say it louder for the people in the back!</strong> Anyway, quick vocabulary check: an <em>attack</em> requires an unauthorized party. This is your employer, on a laptop they own, on a network they run, using a CA they deployed through device management you enrolled in, under a policy you signed. There is no "man in the middle." There is a "security team in the middle," which is a different threat model and, legally speaking, just called "Tuesday."</p>
         <p>If a stranger did this to you at a coffee shop: attack. When it's the device owner protecting company data from malware and phishing: that's the security architecture working. The math is identical; the consent is the entire difference. Kind of like how surgery and stabbing use the same knife.</p>
       </div>
     </details>
@@ -198,7 +198,7 @@
     <details>
       <summary>Nobody will tell me where to put the certificate.</summary>
       <div class="a">
-        <p><strong>The silence is deafening, isn't it?</strong> Except — and we hate to do this to you — it's documented. Extensively. By Zscaler, by your IT team's wiki nobody reads, and by four hundred Stack Overflow answers. The real problem is that the question has twenty-seven answers, because every language runtime decided the OS trust store wasn't good enough for them. Java has its own. Python has its own. Node has its own. Electron apps have their own Node, which has its own.</p>
+        <p><strong>The silence is deafening, isn't it?</strong> Except — and we hate to do this to you — it's documented. Extensively. By Zscaler, by your technology team's wiki nobody reads, and by four hundred Stack Overflow answers. The real problem is that the question has twenty-seven answers, because every language runtime decided the OS trust store wasn't good enough for them. Java has its own. Python has its own. Node has its own. Electron apps have their own Node, which has its own.</p>
         <p>None of that fragmentation was invented by Zscaler. Zscaler just walks into a room where every application has its own personal definition of trust and asks them all the same question at once. Consult the <a href="#locator">Certificate Store Locator</a> below. Bring water.</p>
       </div>
     </details>
@@ -215,7 +215,7 @@
       <summary>The sandbox quarantined my own build artifact.</summary>
       <div class="a">
         <p><strong>Your own code! Held hostage! The audacity!</strong> Okay but consider what the sandbox actually saw: an unsigned, never-before-seen executable, born seconds ago, downloaded over the network, matching no known publisher. That is — and we cannot stress this enough — <em>exactly what malware looks like</em>. The sandbox didn't fail to recognize your binary. It correctly recognized that nobody on Earth could recognize your binary.</p>
-        <p>Ransomware is also somebody's build artifact. The fix isn't "stop sandboxing unknown executables," it's "sign your builds and get your pipeline allowlisted," which your IT team would love to help with, given that you'd be the first person to ever ask nicely.</p>
+        <p>Ransomware is also somebody's build artifact. The fix isn't "stop sandboxing unknown executables," it's "sign your builds and get your pipeline allowlisted," which your security team would love to help with, given that you'd be the first person to ever ask nicely.</p>
       </div>
     </details>
 
@@ -230,7 +230,7 @@
     <details>
       <summary>Why does <code>curl</code> work but my app doesn't?</summary>
       <div class="a">
-        <p><strong>The inconsistency is maddening, we agree.</strong> But it's not random, and it's not Zscaler being moody. <code>curl</code> uses the operating system's trust store, where your IT department already installed the root CA. Your app bundles its own trust store, which it guards like a dragon and updates never.</p>
+        <p><strong>The inconsistency is maddening, we agree.</strong> But it's not random, and it's not Zscaler being moody. <code>curl</code> uses the operating system's trust store, where your technology team already installed the root CA. Your app bundles its own trust store, which it guards like a dragon and updates never.</p>
         <p>Same machine, same proxy, same certificate — the only variable is which pile of CAs each program consults. The proxy is treating everyone identically; your applications simply have different beliefs about whom to trust, like a family at Thanksgiving.</p>
       </div>
     </details>
