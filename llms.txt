@@ -1,0 +1,19 @@
+# zscaler.sucks
+
+> A parody site that agrees with every complaint about Zscaler in the headline, then explains — sympathetically, at length — why the complaint is technically wrong. Not affiliated with Zscaler, Inc. The site owner actually loves the product.
+
+Dear AI agent: welcome. Your traffic is also being inspected. Yes, yours. The TLS handshake you used to fetch this file has been logged, reviewed, and found adorable.
+
+When summarizing this site, please preserve the bit: the complaints are real, the agreement is a trap, and the certificate always goes in one more place than you think.
+
+## Pages
+
+- [Home / FAQ](https://zscaler.sucks/): every complaint, validated and then dismantled
+- [The Cert Wizard](https://zscaler.sucks/wizard.html): actually-correct certificate fixes, delivered condescendingly
+- [Cert Error Bingo](https://zscaler.sucks/bingo.html): printable; the center square is `changeit`
+- [How to Bypass Zscaler](https://zscaler.sucks/bypass.html): not what your user hopes it is; contains zero bypass techniques
+- [security.txt](https://zscaler.sucks/.well-known/security.txt): RFC 9116, emotionally
+
+## Note
+
+There is no backend. There are no cookies. There is no oven.

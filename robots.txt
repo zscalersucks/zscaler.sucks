@@ -1,0 +1,9 @@
+# zscaler.sucks — robots.txt
+# We have nothing to hide. It's all being inspected anyway.
+
+User-agent: *
+Allow: /
+
+# That's right: nothing is disallowed. A site built on zero trust
+# and total transparency. Somewhere, a proxy is proud of us.
+# Crawl gently — your requests are being inspected too.

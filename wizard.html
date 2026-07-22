@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Cert Wizard™ — zscaler.sucks</title>
+<meta name="description" content="The only cert troubleshooter that respects you enough to insult you. Pick your tool. Receive the fix. Feel things.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f6fa;
+    --ink: #16202c;
+    --ink-soft: #4b5a6b;
+    --accent: #0b57d0;
+    --border: #dde4ee;
+    --card: #ffffff;
+    --good: #0a7d33;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1420;
+      --bg-soft: #131b2a;
+      --ink: #e8edf5;
+      --ink-soft: #9fadc0;
+      --accent: #5b9bff;
+      --border: #243044;
+      --card: #151f30;
+      --good: #4fca7d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+  header.top { border-bottom: 1px solid var(--border); }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 0; gap: 1rem; flex-wrap: wrap; }
+  .brand { font-weight: 800; font-size: 1.05rem; }
+  .brand a { color: var(--ink); text-decoration: none; }
+  .brand .tld { color: var(--accent); }
+
+  .intro { padding: 2.5rem 0 1rem; }
+  h1 { font-size: clamp(1.6rem, 4.5vw, 2.3rem); letter-spacing: -0.02em; margin: 0 0 0.35rem; }
+  .tagline { color: var(--accent); font-weight: 650; margin: 0 0 1rem; }
+  .lede { color: var(--ink-soft); max-width: 44rem; margin: 0 0 1rem; }
+  code {
+    font-family: var(--mono); font-size: 0.85em;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    padding: 0.1em 0.35em; border-radius: 5px;
+  }
+
+  .toolgrid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.6rem; margin: 1.5rem 0 1.25rem; padding: 0; list-style: none;
+  }
+  .tool {
+    font: inherit; font-weight: 650; font-size: 0.92rem; cursor: pointer;
+    padding: 0.7rem 0.5rem; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card); color: var(--ink); text-align: center;
+  }
+  .tool:hover { border-color: var(--accent); color: var(--accent); }
+  .tool:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .tool[aria-pressed="true"] {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+
+  #panel {
+    display: none;
+    border: 1px solid var(--border); border-radius: 12px; background: var(--card);
+    padding: 1.25rem 1.25rem 1.35rem; margin-bottom: 2rem;
+  }
+  #panel.show { display: block; }
+  #panel h2 { margin: 0 0 0.5rem; font-size: 1.25rem; letter-spacing: -0.01em; }
+  #panel .say { color: var(--ink-soft); margin: 0 0 1rem; max-width: 44rem; }
+  #panel .say.outro { margin: 1rem 0 0; font-size: 0.92rem; }
+
+  .codebox { position: relative; }
+  .codebox pre {
+    margin: 0; padding: 1rem 1.1rem; overflow-x: auto;
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px;
+    font-family: var(--mono); font-size: 0.82rem; line-height: 1.7;
+    -webkit-overflow-scrolling: touch;
+  }
+  .codebox pre .c { color: var(--ink-soft); }
+  .copy {
+    position: absolute; top: 0.5rem; right: 0.5rem;
+    font: inherit; font-size: 0.75rem; font-weight: 650; cursor: pointer;
+    padding: 0.3rem 0.7rem; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--card); color: var(--ink);
+  }
+  .copy:hover { border-color: var(--accent); color: var(--accent); }
+  .copy:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .copy.done { color: var(--good); border-color: var(--good); }
+
+  .smallnote {
+    color: var(--ink-soft); font-size: 0.88rem; max-width: 44rem;
+    border-top: 1px dashed var(--border); padding: 1.25rem 0 3rem; margin-top: 1rem;
+  }
+  .smallnote a { color: var(--accent); }
+</style>
+</head>
+<body>
+<!-- The wizard has no hat, no staff, and no magic. Just one PEM file and the patience you lacked. -->
+<header class="top">
+  <div class="wrap topbar">
+    <div class="brand"><a href="/">zscaler<span class="tld">.sucks</span></a></div>
+    <div style="font-size:0.85rem"><a href="/" style="color:var(--accent)">← back to the complaints</a></div>
+  </div>
+</header>
+<main class="wrap">
+  <div class="intro">
+    <h1>The Cert Wizard™</h1>
+    <p class="tagline">The only cert troubleshooter that respects you enough to insult you.</p>
+    <p class="lede">Before we begin, you need one thing: your organization's root CA file. Ask your technology team, or export it from your OS keychain — it's the one named after the proxy. Save it somewhere permanent and substitute your real path below wherever you see <code>/path/to/zscaler-root.pem</code>.</p>
+    <p class="lede">That's it. That's the whole prerequisite. With that single file, the wizard will now solve — permanently, tool by tool — the question the internet has been laughing at. Pick your sufferer.</p>
+
+    <div class="toolgrid" id="tools" role="group" aria-label="Choose your tool"></div>
+
+    <section id="panel" aria-live="polite">
+      <h2 id="panel-title"></h2>
+      <p class="say" id="panel-intro"></p>
+      <div class="codebox">
+        <button class="copy" id="copy-btn" type="button">Copy</button>
+        <pre id="panel-code" tabindex="0" aria-label="The fix"></pre>
+      </div>
+      <p class="say outro" id="panel-outro"></p>
+    </section>
+
+    <p class="smallnote">If your tool isn't listed, it has its own trust store. Of course it does. Check its docs for "CA bundle" and add one more tally to the <a href="/#locator">Locator</a>.</p>
+  </div>
+</main>
+<script>
+  const TOOLS = [
+    {
+      name: "Python / pip",
+      title: "Python, pip, and requests",
+      intro: "Python ships its own private list of who to trust, called certifi, and your employer is not on it. Nobody you know is on it. certifi has never met anyone.",
+      code: [
+        "# For requests, pip, and most things built on them:",
+        "export REQUESTS_CA_BUNDLE=/path/to/zscaler-root.pem",
+        "",
+        "# For libraries that ask the standard library directly:",
+        "export SSL_CERT_FILE=/path/to/zscaler-root.pem",
+        "",
+        "# Or teach pip specifically, forever:",
+        "pip config set global.cert /path/to/zscaler-root.pem"
+      ],
+      outro: "Put the exports in your shell profile so this survives a reboot. Every virtualenv inherits an environment variable, which means for once in your life you only have to do this on each machine, not each project."
+    },
+    {
+      name: "Node.js",
+      title: "Node.js",
+      intro: "Node compiles its trusted CAs directly into the binary, because reading a file off disk at startup felt like too much commitment.",
+      code: [
+        "export NODE_EXTRA_CA_CERTS=/path/to/zscaler-root.pem"
+      ],
+      outro: "Note the word EXTRA. Node is not replacing its list with yours; it is graciously permitting your certificate to exist alongside the real ones. It has boundaries, and now, so do you."
+    },
+    {
+      name: "npm",
+      title: "npm",
+      intro: "Yes, npm must be told separately from Node. They ship in the same installer, live in the same directory, and do not speak.",
+      code: [
+        "npm config set cafile /path/to/zscaler-root.pem"
+      ],
+      outro: "This writes a cafile line to your .npmrc, where it will quietly do its job until a teammate copies your .npmrc to a machine where the path doesn't exist. Yarn will ask you all of this again later, separately, out of spite."
+    },
+    {
+      name: "Java",
+      title: "Java",
+      intro: "Java has maintained its own trust store since 1997 and in all that time has never once considered asking the operating system anything. The keystore password is changeit. No one ever has.",
+      code: [
+        "# Java 9 and newer:",
+        "keytool -importcert -cacerts -storepass changeit -alias zscaler-root -file zscaler-root.pem",
+        "",
+        "# Older Java (no -cacerts flag) points at the file directly:",
+        "keytool -importcert -keystore \"$JAVA_HOME/lib/security/cacerts\" \\",
+        "  -storepass changeit -alias zscaler-root -file zscaler-root.pem"
+      ],
+      outro: "Now repeat for every other JDK on the machine, including the one you forgot was installed. There is always one you forgot was installed. It is the one your build uses."
+    },
+    {
+      name: "Docker",
+      title: "Docker builds",
+      intro: "Containers are portable because they carry nothing with them — including, you may have noticed, any reason to trust your proxy. The image must be taught from inside.",
+      code: [
+        "# Debian/Ubuntu-based images — add to your Dockerfile:",
+        "COPY zscaler-root.crt /usr/local/share/ca-certificates/",
+        "RUN update-ca-certificates",
+        "",
+        "# RHEL-family images (UBI, Rocky, Alma) keep it elsewhere:",
+        "#   COPY zscaler-root.crt /etc/pki/ca-trust/source/anchors/",
+        "#   RUN update-ca-trust"
+      ],
+      outro: "In a multi-stage build, do this in every stage that touches the network. Each stage starts over from nothing and trusts no one. You asked for immutable infrastructure; this is the invoice."
+    },
+    {
+      name: "git",
+      title: "git",
+      intro: "git will cheerfully clone from any server on Earth except one behind your own company's proxy, which it regards as an unacceptable intrusion into its relationship with GitHub.",
+      code: [
+        "git config --global http.sslCAInfo /path/to/zscaler-root.pem"
+      ],
+      outro: "This covers https remotes. SSH remotes were never being inspected in the first place, a fact we suggest you sit with quietly rather than mention to anyone."
+    },
+    {
+      name: "curl",
+      title: "curl",
+      intro: "curl usually trusts the OS store already, which is why it works when nothing else does and gets waved around in every ticket as proof that the network is fine. Sometimes, though, even curl needs to be told.",
+      code: [
+        "export CURL_CA_BUNDLE=/path/to/zscaler-root.pem",
+        "",
+        "# or per call:",
+        "curl --cacert /path/to/zscaler-root.pem https://example.com"
+      ],
+      outro: "You have now permanently retired the -k flag from your muscle memory. We saw it in there. Everyone did."
+    },
+    {
+      name: "AWS CLI",
+      title: "AWS CLI",
+      intro: "The AWS CLI is written in Python, so naturally it ignores the Python variable you already set and demands one addressed to it by name.",
+      code: [
+        "export AWS_CA_BUNDLE=/path/to/zscaler-root.pem"
+      ],
+      outro: "One variable, every region, every service. This may be the shortest distance between problem and fix that AWS has ever offered anyone, and you got to be here for it."
+    },
+    {
+      name: "conda",
+      title: "conda",
+      intro: "conda manages your environments, your packages, and its own strong feelings about your certificate, in that order.",
+      code: [
+        "conda config --set ssl_verify /path/to/zscaler-root.pem"
+      ],
+      outro: "Notice that ssl_verify accepts a file path, not just true or false. You were about to set it to false. We both know you were. This is the same setting, except it keeps working when you leave the building."
+    },
+    {
+      name: "Ruby",
+      title: "Ruby",
+      intro: "Ruby consults the standard SSL_CERT_FILE variable like a normal, well-adjusted language, which after everything you've been through today should feel deeply suspicious.",
+      code: [
+        "export SSL_CERT_FILE=/path/to/zscaler-root.pem"
+      ],
+      outro: "Yes, this is the same variable from the Python panel. Two runtimes sharing one setting. It's allowed. Someone should tell the others it's allowed."
+    },
+    {
+      name: "Go",
+      title: "Go",
+      intro: "Go uses the operating system's trust store. It just… uses it. The one that was there the whole time. Go was raised right.",
+      code: [
+        "# No command. If the root CA is installed in your OS trust store,",
+        "# Go programs already work. There is nothing to configure.",
+        "",
+        "# On Linux containers, the OS trust store IS the fix:",
+        "# install the cert into the image — see the Docker panel."
+      ],
+      outro: "Frame this panel. It is the only one of its kind, and you will want proof it existed."
+    }
+  ];
+
+  const grid = document.getElementById('tools');
+  const panel = document.getElementById('panel');
+  const pTitle = document.getElementById('panel-title');
+  const pIntro = document.getElementById('panel-intro');
+  const pCode = document.getElementById('panel-code');
+  const pOutro = document.getElementById('panel-outro');
+  const copyBtn = document.getElementById('copy-btn');
+  let current = null;
+
+  function renderCode(lines) {
+    pCode.textContent = '';
+    lines.forEach((line, i) => {
+      if (i > 0) pCode.appendChild(document.createTextNode('\n'));
+      if (line.trimStart().startsWith('#')) {
+        const span = document.createElement('span');
+        span.className = 'c';
+        span.textContent = line;
+        pCode.appendChild(span);
+      } else {
+        pCode.appendChild(document.createTextNode(line));
+      }
+    });
+  }
+
+  TOOLS.forEach((tool, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tool';
+    btn.type = 'button';
+    btn.textContent = tool.name;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.setAttribute('aria-controls', 'panel');
+    btn.addEventListener('click', () => {
+      if (current === i) {
+        current = null;
+        btn.setAttribute('aria-pressed', 'false');
+        panel.classList.remove('show');
+        return;
+      }
+      current = i;
+      grid.querySelectorAll('.tool').forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      pTitle.textContent = tool.title;
+      pIntro.textContent = tool.intro;
+      renderCode(tool.code);
+      pOutro.textContent = tool.outro;
+      copyBtn.textContent = 'Copy';
+      copyBtn.classList.remove('done');
+      panel.classList.add('show');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+    grid.appendChild(btn);
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (current === null) return;
+    navigator.clipboard.writeText(TOOLS[current].code.join('\n')).then(() => {
+      copyBtn.textContent = 'Copied';
+      copyBtn.classList.add('done');
+      setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('done'); }, 2000);
+    }).catch(() => {
+      copyBtn.textContent = 'Select it yourself. Trust no one.';
+      setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2600);
+    });
+  });
+</script>
+</body>
+</html>
