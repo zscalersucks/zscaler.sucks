@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Know Your Captor — zscaler.sucks</title>
+<meta name="description" content="A field guide to the machine reading this request. Written for people who would rather understand the thing than yell at it.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f6fa;
+    --ink: #16202c;
+    --ink-soft: #4b5a6b;
+    --accent: #0b57d0;
+    --border: #dde4ee;
+    --card: #ffffff;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1420;
+      --bg-soft: #131b2a;
+      --ink: #e8edf5;
+      --ink-soft: #9fadc0;
+      --accent: #5b9bff;
+      --border: #243044;
+      --card: #151f30;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.6;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+  header.top { border-bottom: 1px solid var(--border); }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 0; gap: 1rem; flex-wrap: wrap; }
+  .brand { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .brand a { color: var(--ink); text-decoration: none; }
+  .brand .tld { color: var(--accent); }
+  .backlink { font-size: 0.85rem; }
+  .backlink a { color: var(--accent); text-decoration: none; }
+  .backlink a:hover { text-decoration: underline; }
+
+  .intro { padding: 3rem 0 1rem; }
+  .kicker {
+    text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.12em;
+    color: var(--accent); font-weight: 700; margin: 0 0 0.5rem;
+    font-family: var(--mono);
+  }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 0.75rem; }
+  .lede { color: var(--ink-soft); max-width: 46rem; font-size: 1.05rem; margin: 0 0 0.75rem; }
+  .lede strong { color: var(--ink); }
+
+  article.sect {
+    border: 1px solid var(--border); border-radius: 14px; background: var(--card);
+    padding: 1.5rem 1.5rem 1.35rem; margin: 0 0 1.25rem;
+  }
+  article.sect h2 {
+    font-size: 1.3rem; letter-spacing: -0.01em; margin: 0 0 1rem;
+    display: flex; align-items: baseline; gap: 0.75rem;
+  }
+  .num {
+    font-family: var(--mono); font-size: 0.85rem; font-weight: 700;
+    color: var(--accent); flex: none; letter-spacing: 0.05em;
+  }
+  .beat {
+    font-family: var(--mono); text-transform: uppercase; font-size: 0.68rem;
+    letter-spacing: 0.14em; font-weight: 700; color: var(--ink-soft);
+    margin: 1.15rem 0 0.35rem;
+  }
+  .beat::before { content: "// "; color: var(--accent); }
+  article.sect p { margin: 0 0 0.6rem; color: var(--ink-soft); font-size: 0.96rem; }
+  article.sect p strong { color: var(--ink); }
+  .barb {
+    margin: 1.2rem 0 0 !important; padding: 0.75rem 0 0;
+    border-top: 1px dashed var(--border);
+    color: var(--ink) !important; font-weight: 600; font-size: 0.98rem !important;
+  }
+  code {
+    font-family: var(--mono); font-size: 0.85em;
+    background: var(--bg-soft); border: 1px solid var(--border);
+    padding: 0.1em 0.35em; border-radius: 5px;
+  }
+  a { color: var(--accent); }
+
+  .sections { padding: 1.5rem 0 1rem; }
+
+  .closing {
+    border: 1px solid var(--border); border-radius: 14px; background: var(--bg-soft);
+    padding: 1.75rem 1.5rem; margin: 1.5rem 0 3.5rem;
+  }
+  .closing h2 { font-size: 1.3rem; margin: 0 0 0.75rem; letter-spacing: -0.01em; }
+  .closing p { color: var(--ink-soft); margin: 0 0 0.75rem; max-width: 46rem; }
+  .closing p strong { color: var(--ink); }
+  .closing .exits { margin: 1.1rem 0 0; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .closing .exits a {
+    display: inline-block; text-decoration: none; font-weight: 650; font-size: 0.9rem;
+    padding: 0.55rem 1.1rem; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card); color: var(--ink);
+  }
+  .closing .exits a:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer.site {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0 3rem; color: var(--ink-soft); font-size: 0.85rem;
+  }
+  footer.site p { max-width: 46rem; margin: 0; }
+
+  @media (max-width: 480px) {
+    article.sect { padding: 1.15rem 1.1rem 1.05rem; }
+  }
+</style>
+</head>
+<body>
+<!-- This page was fetched through the machine it describes. The machine read it first and found nothing objectionable, which stung more than a block would have. -->
+<header class="top">
+  <div class="wrap topbar">
+    <div class="brand"><a href="/">zscaler<span class="tld">.sucks</span></a></div>
+    <div class="backlink"><a href="/">&larr; back to the complaints</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <p class="kicker">Field Guide / 07 Specimens</p>
+    <h1>Know your captor.</h1>
+    <p class="lede">Someone wrote in to say this site is "just a helpdesk FAQ." Fair. Here is the other version: a field guide to the machine currently reading this request — what it actually does, mechanically, and why each mechanism happens to land on your last nerve. Written for people who would rather understand the thing than yell at it. The yelling section is <a href="/#faq">down the hall</a>.</p>
+    <p class="lede">Everything below is real. That is the uncomfortable part.</p>
+  </div>
+
+  <div class="sections">
+
+    <article class="sect">
+      <h2><span class="num">01</span>The process that owns your default route</h2>
+      <p class="beat">What is actually happening</p>
+      <p>Client Connector sits on your laptop and takes custody of the traffic path — a local proxy and tunnel endpoint that everything you send is steered into before it sees the internet. The first generation of this tunnel, Z-Tunnel 1.0, was essentially <code>HTTP CONNECT</code> with ambitions: fine for web traffic, blind to everything else. Z-Tunnel 2.0 is a proper DTLS tunnel (TLS when UDP is unwelcome) that carries all ports and all protocols, not just the polite ones. And underneath it all, PAC files persist as the fallback ritual — a small JavaScript function from the 1990s, still deciding where your packets go when the modern machinery steps aside.</p>
+      <p class="beat">Why you hate it</p>
+      <p>There is a process on your machine that you did not install, cannot kill, and that respawns when you try. It sits between you and every server on Earth. You have opened Activity Monitor and looked at it the way you look at a stranger in your kitchen.</p>
+      <p class="barb">Your default route belongs to a process you did not elect. Except your organization did elect it, on your behalf, in writing, during onboarding — which is worse for your argument, and everyone involved knows it.</p>
+    </article>
+
+    <article class="sect">
+      <h2><span class="num">02</span>The handshake with three hands</h2>
+      <p class="beat">What is actually happening</p>
+      <p>Before any decryption occurs, the proxy reads the SNI field in your TLS ClientHello — the destination hostname, sitting in cleartext, exactly where the protocol puts it. A surprising amount of policy runs on that metadata alone, no interception required. When it does inspect, the mechanism is unglamorous: it terminates your TLS session, opens its own to the origin, and mints a per-site certificate on the fly, signed by an intermediate that chains to the root your MDM installed the day you got the laptop. Two valid TLS sessions. You are a party to one of them.</p>
+      <p class="beat">Why you hate it</p>
+      <p>The padlock in your browser says secure, and you have learned that it means "secure to the proxy," which feels like being told your diary has a co-author. You called it a man-in-the-middle attack in a meeting. You were not wrong about the topology.</p>
+      <p class="barb">Nobody broke the cryptography; they repointed the trust. The math is fine. The math was always fine. Trust was the variable, and trust is an org chart.</p>
+    </article>
+
+    <article class="sect">
+      <h2><span class="num">03</span>The carve-out list</h2>
+      <p class="beat">What is actually happening</p>
+      <p>Applications that pin their certificates — banking apps, certain software updaters, half of the stranger corners of O365 — will reject any certificate that is not the exact one baked into them, minted intermediates included. They break under inspection, deterministically. So administrators maintain bypass lists: enumerated destinations that pass through uninspected, reviewed and grudgingly extended every time a vendor ships a new pinned endpoint.</p>
+      <p class="beat">Why you hate it</p>
+      <p>You found the exemption list, or heard about it, and smelled hypocrisy: if inspection matters so much, why does it have a hole punched in it for the bank? Either the emperor inspects everything or the emperor has no clothes — that was the shape of your argument, and it felt airtight at the time.</p>
+      <p class="barb">The alternative to partial coverage was never total coverage. It was the appliance graveyard, or <code>ssl_verify=false</code> everywhere, forever. A carve-out list is not hypocrisy; it is triage, which is what competence looks like when viewed from below.</p>
+    </article>
+
+    <article class="sect">
+      <h2><span class="num">04</span>Uncategorized, like this very page</h2>
+      <p class="beat">What is actually happening</p>
+      <p>Every destination is checked against a URL filtering database plus dynamic content classification for whatever the database has not met yet. Two labels carry elevated risk by default: "Uncategorized" and "Newly Registered Domain." Not out of spite — out of arithmetic. Fresh domains with no reputation are where phishing infrastructure lives, because attackers register, burn, and rotate faster than any human review cycle.</p>
+      <p class="beat">Why you hate it</p>
+      <p>The niche documentation site you need is blocked as Uncategorized while an actual content farm sails through under "News/Media." The model is statistical and you are, individually, an outlier being lawfully sacrificed to a base rate.</p>
+      <p>Now observe this domain: registered June 2026, parked on a novelty TLD, named after a security vendor. That is not adjacent to the threat model — that <strong>is</strong> the threat model. We are the training data. Your gateway may be blocking this page right now. The site owner's own UniFi router did, and they had to make an exception for their own joke.</p>
+      <p class="barb">If you are reading this on a corporate network, someone approved an exception for a two-month-old domain called zscaler.sucks. Consider what that says about them, and then thank them.</p>
+    </article>
+
+    <article class="sect">
+      <h2><span class="num">05</span>Patient zero, which is you</h2>
+      <p class="beat">What is actually happening</p>
+      <p>A file with a hash nobody has ever seen gets detonated in an instrumented virtual machine: executed, watched, its behavior — file writes, registry changes, network calls, the works — recorded and scored. The verdict is cached globally by hash. Which is why the first download of your freshly compiled build stalls at the gateway, and the second download — yours or anyone's, anywhere — is instant. The sandbox is not slow; it is amortized.</p>
+      <p class="beat">Why you hate it</p>
+      <p>Your build is, by definition, a never-before-seen unsigned executable. So is every subsequent build. You occupy the exact silhouette the sandbox exists to catch, and you occupy it several times a day, on a deadline, watching a progress bar sit at zero while a virtual machine somewhere runs your binary before you are permitted to.</p>
+      <p class="barb">Patient-zero protection means someone has to wait so that nobody has to be first. Today it was you. Given your release cadence, it is usually you.</p>
+    </article>
+
+    <article class="sect">
+      <h2><span class="num">06</span>Why your WebSocket died at minute forty</h2>
+      <p class="beat">What is actually happening</p>
+      <p>Any proxy carrying millions of concurrent flows keeps a connection state table, and state tables have hygiene. A flow that goes silent for long enough is indistinguishable from a dead one — there is no packet that says "still here, just quiet" unless you send it — so idle entries get reaped. This is not novel behavior. It is the same policy enforced by every load balancer, NAT gateway, and stateful firewall shipped since the 1990s, including the router in your house.</p>
+      <p class="beat">Why you hate it</p>
+      <p>It worked on localhost. It worked for the demo. Then it died in the field at some maddening, almost-round interval, and you spent a day of your one life bisecting infrastructure before finding the timeout, and the timeout was documented.</p>
+      <p class="barb">Your socket did not die because the proxy hates you. It died because you went silent and expected the network to assume the best, and infrastructure doesn't do faith. Send the heartbeat.</p>
+    </article>
+
+    <article class="sect">
+      <h2><span class="num">07</span>It is not a VPN, and that matters twice</h2>
+      <p class="beat">What is actually happening</p>
+      <p>A VPN puts your laptop <strong>on</strong> the network: an interface, an internal address, a subnet full of reachable neighbors — which is to say, lateral movement heaven with a login page. ZPA inverts it. App connectors inside the datacenter dial <strong>outbound</strong> to a broker; your client connects to the same broker; access is stitched together per application, per identity. You get one app at a time, never a subnet, and the datacenter firewall never opens an inbound port to make it happen. The network you think you are on does not, from where you sit, exist.</p>
+      <p class="beat">Why you hate it</p>
+      <p>Muscle memory. You cannot <code>ping</code> the server. You cannot scan the subnet to find that one box whose hostname you forgot. Every mental model you built on "connected means on the network" quietly returns wrong answers now, and the helpdesk keeps telling you to "turn off the VPN."</p>
+      <p class="barb">"Turn off the VPN" is wrong twice: there is no VPN, and turning it off is how you lose the very application you were trying to reach. The phrase survives because vocabulary outlives architecture. So do most complaints.</p>
+    </article>
+
+  </div>
+
+  <div class="closing">
+    <p class="kicker">Post-Mortem</p>
+    <h2>The uncomfortable summary</h2>
+    <p>All seven specimens above are the same animal. The entire architecture is one bet, stated seven ways: <strong>the perimeter is dead</strong>, every network is hostile including your own, and what remains worth building on is identity plus inspection. Each thing that annoys you — the resident process, the re-signed handshake, the suspicious eye on new domains, the detonation chamber, the reaped socket, the network you can no longer see — is that one bet, applied consistently, including to you. Especially to you.</p>
+    <p>You are allowed to resent the tax. The tax is real; you pay it in milliseconds, trust-store rituals, and the occasional quarantined build. But the ledger has two columns, and the other one is every flat network that got encrypted wall-to-wall by a single phished contractor. You can dislike the tax and still concede the ledger. Most people who read this far already have. They just wanted someone to admit it was a tax first. Consider it admitted.</p>
+    <div class="exits">
+      <a href="/#faq">Go back to yelling, it's healthy</a>
+      <a href="/wizard.html">Or fix your trust store like an adult</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>zscaler.sucks is a parody site, unaffiliated with Zscaler, Inc. Everything on this page is public knowledge, lovingly dissected. The captor did not review this field guide. It did, however, carry it to you.</p>
+  </div>
+</footer>
+</body>
+</html>

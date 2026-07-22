@@ -222,6 +222,7 @@
     <div class="brand">zscaler<span class="tld">.sucks</span></div>
     <nav>
       <a href="#faq">Complaints</a>
+      <a href="/anatomy.html">Anatomy</a>
       <a href="#locator">Cert Store Locator</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#ticket">Ticket Status</a>
@@ -246,6 +247,7 @@
       <span class="pill">✓ SOC 2 compliant feelings</span>
       <span class="pill">✓ Zero Trust, zero judgment</span>
       <span class="pill">✓ Your visit has been logged for quality and amusement purposes</span>
+      <span class="pill">✓ "Edgier than a helpdesk FAQ" — one (1) critic</span>
     </div>
     <p class="odometer">Packets lovingly inspected since you arrived: <strong id="pkt">0</strong></p>
   </div>
@@ -269,6 +271,23 @@
       <div class="a">
         <p><strong>Say it louder for the people in the back!</strong> Anyway, quick vocabulary check: an <em>attack</em> requires an unauthorized party. This is your employer, on a laptop they own, on a network they run, using a CA they deployed through device management you enrolled in, under a policy you signed. There is no "man in the middle." There is a "security team in the middle," which is a different threat model and, legally speaking, just called "Tuesday."</p>
         <p>If a stranger did this to you at a coffee shop: attack. When it's the device owner protecting company data from malware and phishing: that's the security architecture working. The math is identical; the consent is the entire difference. Kind of like how surgery and stabbing use the same knife.</p>
+        <p>Mechanically it's also more surgical than the diagram in your head: the proxy reads the SNI off your ClientHello and makes most policy calls on metadata alone, no decryption required. When it does inspect, it terminates your session, opens its own to the origin, and mints a per-site certificate on the fly — chained to the root your MDM installed. Nobody broke the cryptography. They repointed the trust. The math is fine; the math was always fine. Trust was the variable, and trust is an org chart. Full autopsy in <a href="/anatomy.html">Know Your Captor</a>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Inspection is security theater — the pinned apps get bypassed anyway.</summary>
+      <div class="a">
+        <p><strong>Now this is a quality complaint — you've actually read the exemption list.</strong> Correct: applications that pin their certificates break under inspection, so admins carve them out, and coverage is partial. Here's what the theater critique skips: the alternative to partial coverage was never total coverage. It's triage — inspect what can be inspected, exempt what bricks — or one of the two classic endings: an appliance graveyard, or a fleet of developers setting <code>verify=false</code> and calling it a workaround.</p>
+        <p>Security isn't a play; it's actuarial. The exemption list isn't hypocrisy, it's the premium schedule — and it gets reviewed more often than your dependencies do.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>So my employer can read my personal email now.</summary>
+      <div class="a">
+        <p><strong>A chilling thought.</strong> Here's the part that should chill you more: they could before. On a laptop they own, imaged, enrolled in device management, with a managed browser and an endpoint agent — that power predates the proxy by a decade. Zscaler didn't create the visibility; it's just the first piece of plumbing that showed you its face. What you're feeling isn't new surveillance. It's new legibility.</p>
+        <p>Practical guidance, free of charge: your personal life has a perfectly good phone. It's in your pocket. On LTE, it isn't even on their network. This is the rare security control that improves your work-life balance.</p>
       </div>
     </details>
 
@@ -289,10 +308,19 @@
     </details>
 
     <details>
+      <summary>Why does every website think I'm in Chicago now?</summary>
+      <div class="a">
+        <p><strong>Because to the internet, you are.</strong> Your traffic egresses from a Zscaler datacenter, so geolocation databases place you wherever your tenant's nearest PoP lives — and every anti-fraud system on Earth notices a thousand of your coworkers arriving from the same address. Hence the captchas, the sudden Spanish, your streaming service's little episode. A thousand engineers behind one IP is statistically indistinguishable from one extremely motivated bot, and cheap fraud scoring does not flatter the ambiguity.</p>
+        <p>The upside nobody thanks anyone for: you've been functionally anonymized into a crowd. You spent years asking advertisers to stop following you around, and the moment something delivered, you filed a ticket about it. The complaint and the compliment are the same sentence.</p>
+      </div>
+    </details>
+
+    <details>
       <summary>The sandbox quarantined my own build artifact.</summary>
       <div class="a">
         <p><strong>Your own code! Held hostage! The audacity!</strong> Okay but consider what the sandbox actually saw: an unsigned, never-before-seen executable, born seconds ago, downloaded over the network, matching no known publisher. That is — and we cannot stress this enough — <em>exactly what malware looks like</em>. The sandbox didn't fail to recognize your binary. It correctly recognized that nobody on Earth could recognize your binary.</p>
         <p>Ransomware is also somebody's build artifact. The fix isn't "stop sandboxing unknown executables," it's "sign your builds and get your pipeline allowlisted," which your security team would love to help with, given that you'd be the first person to ever ask nicely.</p>
+        <p>And the reason your second download of the same file sailed through: verdicts cache globally by hash. Someone has to be patient zero so nobody else has to be first. Today it was you. It's practically philanthropy — involuntary, unthanked, and logged, like most philanthropy.</p>
       </div>
     </details>
 
@@ -316,7 +344,8 @@
       <summary>My WebSocket connections keep dropping.</summary>
       <div class="a">
         <p><strong>Nothing should ever end, least of all a socket.</strong> Here's the thing though: idle connection timeouts exist on every proxy, load balancer, and firewall ever built — nginx does it, AWS does it, your home router does it. A connection that sits silent for an hour is indistinguishable from a dead one, so infrastructure reaps it. This predates Zscaler by decades.</p>
-        <p>If your app dies when a long-lived connection drops, it was always going to die — Zscaler just delivered the news first. Heartbeats and reconnect logic aren't a workaround, they're the baseline every distributed-systems textbook has demanded since before you had this job. Your future incident retro thanks you.</p>
+        <p>The mechanism, since you're owed one: proxies keep connection state tables, and a flow that says nothing for an hour is indistinguishable from a corpse. Everything reaps it — NAT gateways, load balancers, the nginx you deployed yourself with a default timeout you also never read. No state table on Earth runs on faith. Heartbeats aren't a workaround; they're how a socket proves it's alive.</p>
+        <p>If your app dies when a long-lived connection drops, it was always going to die — Zscaler just delivered the news first. Reconnect logic is the baseline every distributed-systems textbook has demanded since before you had this job. Your future incident retro thanks you.</p>
       </div>
     </details>
 
